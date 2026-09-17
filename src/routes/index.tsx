@@ -11,7 +11,6 @@ import {
   Menu,
   RefreshCw,
   Search,
-  Send,
   ShieldCheck,
   Sparkles,
   X,
@@ -30,8 +29,10 @@ type ToolConfig = {
   contextPlaceholder: string;
 };
 
+const emailTool: ToolConfig = { id: "email", label: "Smart Email Generator", shortLabel: "Email Generator", description: "Draft precise messages in your voice", icon: Mail, placeholder: "Request sign-off on the Q3 launch plan by Friday", contextPlaceholder: "Recipient, relationship, key facts, deadline…" };
+
 const tools: ToolConfig[] = [
-  { id: "email", label: "Smart Email Generator", shortLabel: "Email Generator", description: "Draft precise messages in your voice", icon: Mail, placeholder: "Request sign-off on the Q3 launch plan by Friday", contextPlaceholder: "Recipient, relationship, key facts, deadline…" },
+  emailTool,
   { id: "notes", label: "Meeting Notes Summarizer", shortLabel: "Meeting Notes", description: "Turn transcripts into decisions", icon: FileText, placeholder: "Paste your meeting transcript or notes…", contextPlaceholder: "Meeting title, attendees, and any priorities…" },
   { id: "planner", label: "AI Task Planner", shortLabel: "Task Planner", description: "Break goals into an actionable plan", icon: CheckSquare2, placeholder: "Plan the Q3 launch across product, design, and marketing", contextPlaceholder: "Deadline, available time, team, constraints…" },
   { id: "research", label: "AI Research Assistant", shortLabel: "Research", description: "Build structured research briefs", icon: Search, placeholder: "Compare onboarding approaches for B2B SaaS products", contextPlaceholder: "Audience, scope, known facts, questions to answer…" },
@@ -70,10 +71,10 @@ function Workspace() {
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
 
-  const active = useMemo(() => tools.find((tool) => tool.id === activeTool) ?? tools[0], [activeTool]);
+  const active = useMemo(() => tools.find((tool) => tool.id === activeTool) ?? emailTool, [activeTool]);
 
   function selectTool(id: Tool) {
-    const next = tools.find((tool) => tool.id === id) ?? tools[0];
+    const next = tools.find((tool) => tool.id === id) ?? emailTool;
     setActiveTool(id);
     setPrompt(next.placeholder);
     setContext("");
